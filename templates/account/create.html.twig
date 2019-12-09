@@ -1,0 +1,32 @@
+{% extends "base.html.twig" %}
+
+{% block title %}
+    create account
+{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="/css/form.css">
+{% endblock %}
+
+{% block body %}
+
+    <section>
+        {{form_start(form)}}
+
+            <div>
+                {{ form_label( form.plateform , 'plateform' ) }}
+                {{ form_widget( form.plateform ) }}
+            </div>
+            
+            <div>
+                {{ form_label( form.password , 'login' ) }}
+                {{ form_widget( form.password ) }}
+            </div>
+
+            <button type="submit">
+                suivant
+            </button>
+        {{form_end(form)}}
+    </section>
+
+{% endblock %}

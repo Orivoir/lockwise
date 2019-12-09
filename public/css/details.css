@@ -1,0 +1,90 @@
+.control-wrap ul li a::before ,
+.control-wrap ul li a:hover::before {
+    display: none;
+}
+
+.control-wrap ul li {
+
+    background: #fff;
+    padding: 1.5vh 2vw;
+    color: rgb(42,42,42);
+    border-radius: 3px;
+    text-transform: capitalize;
+}
+
+li.remove-control-item a {
+
+    color: #c23616;
+}
+
+.control-wrap ul {
+
+    margin: 4vh 0;
+    display: flex;
+    justify-content: space-around;
+}
+
+.password-copied {
+
+    display: flex;
+    background: #009432;
+    color: #fff;
+    margin: 3vh 0;
+    padding: 1.5vh 0;
+    align-items: center;
+    justify-content: center;
+}
+
+.password-copied.hide {
+
+    display: none;
+}
+
+.password-copied button {
+
+    margin-right: 2vw;
+    font-size: 15px;
+    color: #fff;
+}
+
+.diff-update {
+
+    display:  flex;
+    align-items: center;
+    justify-content: space-around;
+    padding: 1vh 2vw;
+    color: #fff;
+    border-radius: 3px;
+    font-weight: 650;
+    letter-spacing: .13rem; 
+}
+
+.diff-update.success::after {
+
+    content: "✅";
+}
+.diff-update.success {
+
+    background: rgb(51, 172, 51);
+}
+
+.diff-update.warning::after {
+
+    content: " ⚠";
+    font-size: 22px;
+}
+
+.diff-update.warning {
+
+    background: rgb(185, 185, 25);
+}
+
+.diff-update.error::after {
+
+    content: "❌";
+}
+
+.diff-update.error {
+
+    background: #c23616;
+}

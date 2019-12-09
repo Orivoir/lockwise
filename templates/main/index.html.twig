@@ -1,0 +1,28 @@
+{% extends "base.html.twig" %}
+
+{% block title %}
+    home
+{% endblock %}
+
+{% block body %}
+
+    <h1>
+        Welcome <strong>Lockwise</strong>
+    </h1>
+
+    <h2>
+        your <b>{{ accounts|length }}</b>
+        favorite{{ accounts|length > 1 ? "s" : ""}} account
+    </h2>
+
+    {% include "core/add-account.html.twig" %}
+
+    {% include "core/list-account.html.twig" %}
+
+    <p>
+        <a href="{{path("account.index")}}">
+            tous les comptes
+        </a>
+    </p>
+
+{% endblock %}

@@ -1,0 +1,22 @@
+form {
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba( 0,0,0,.85 );
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+form button {
+
+    background: #fff;
+    padding: 6vh 8vw;
+    font-size: 23px;
+    letter-spacing: .14rem;
+    border-radius: 3px;
+    color: rgb( 20,20,20 );
+}

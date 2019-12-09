@@ -1,0 +1,45 @@
+{% extends "base.html.twig" %}
+
+{% block title %}
+    update {{ account.plateform }}
+{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="/css/form.css">
+{% endblock %}
+
+{% block body %}
+    <section>
+        {{form_start(form)}}
+
+            <div>
+                {{ form_label( form.plateform , 'plateform' ) }}
+                {{ form_widget( form.plateform ) }}
+            </div>
+            
+            <div>
+                {{ form_label( form.login , 'login' ) }}
+                {{ form_widget( form.login ) }}
+            </div>
+            
+            <div>
+                {{ form_label( form.password , 'password' ) }}
+                {{ form_widget( form.password ) }}
+            </div>
+
+            <button type="submit"> 
+                modifié
+                <i class="fas fa-chevron-right"></i>
+            </button>
+
+            <div>
+                <a href="{{path("account.details" , {
+                    "id": account.id ,
+                    "slug": account.slug
+                } )}}">
+                    retour
+                </a>
+            </div>
+        {{form_end(form)}}
+    </section>
+{% endblock %}

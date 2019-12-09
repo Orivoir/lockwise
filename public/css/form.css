@@ -1,0 +1,78 @@
+section {
+
+    height: 100vh;
+    display: flex;
+
+}
+
+form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    background: #fff;
+    color: #000;
+}
+
+form div {
+    width: 85%;
+    margin: auto;
+
+}
+
+form div label , form div input {
+
+    display: block;
+}
+
+form div label {
+
+    opacity: .62;
+    margin-bottom: .8vh;
+}
+
+form div input:focus {
+
+    border-color: rgb(25, 149, 165);
+    width: 100%;
+}
+
+div a {
+
+    text-transform: capitalize;
+    font-size: 16px;
+    background: rgb( 42,42,42 );
+    padding: 1.3vh 1.35vw;
+    border-radius: 3px;
+}
+
+form div input {
+
+    transition: .3s cubic-bezier(0.175, -.485, 0.32, 1.275) all;
+    width: 25%;
+    min-width: 42px;
+    border: none;
+    border-bottom: 2px solid #000;
+    outline: none;
+    padding-bottom: 5px;
+}
+
+form button:hover {
+
+    background: #000;
+    color: #fff;
+}
+
+form button {
+
+    font-weight: 650;
+    border: 2px solid #000;
+    border-radius: 3px;
+    text-transform: uppercase;
+    font-size: 20px;
+    padding: 1.8vh 2vw;
+    letter-spacing: .13rem;
+    width: 85%;
+    margin: auto;
+    transition: .13s linear all;
+}
