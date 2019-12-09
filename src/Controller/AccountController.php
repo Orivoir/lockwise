@@ -146,7 +146,7 @@ class AccountController extends AbstractController
 
         if( $slug != $realSlug ) {
             // redirect to the canonique link
-            return $this->redirectToRoute('account.remove' , [
+            return $this->redirectToRoute('account.update' , [
                 'id' => $account->getId()
                 ,'slug' => $realSlug
             ] , 301 ) ;
@@ -160,6 +160,7 @@ class AccountController extends AbstractController
             ->add('codeRecup' , CollectionType::class , [
                 'entry_type' => TextType::class
                 ,'allow_add' => true
+                ,'allow_delete' => true
             ] )
         ;
 

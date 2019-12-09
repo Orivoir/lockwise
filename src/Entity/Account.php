@@ -194,7 +194,7 @@ class Account
 
         if( $this->isRemove ) {
             $this->removeAt = new \DateTime();
-            $this->isFavorite = false; 
+            $this->isFavorite = false;
         }
 
         return $this;

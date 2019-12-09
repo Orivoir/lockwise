@@ -27,9 +27,23 @@ document.addEventListener('DOMContentLoaded' , () => {
                 const 
                     wrap = document.createElement(list.getAttribute('data-widget-tags').split('<').join('').split('>').join('').split('/')[0].trim())
                     ,ref = list.querySelector( wrap.nodeName )
+                    ,btnRemove = document.createElement('button')
                 ;
 
+                wrap.id = "item-input-code-recup-" + count ;
+
+                btnRemove.classList.add('btn-remove-type')
+                btnRemove.setAttribute('type' , "button" ) ;
+                btnRemove.innerHTML = '<i class="fas fa-trash-alt"></i>';
+                btnRemove.setAttribute('data-item-remove-selector' , "#"+wrap.id )
+                btnRemove.addEventListener('click' , function() {
+
+                    const item2remove = document.querySelector( this.getAttribute( 'data-item-remove-selector' ) ) ;
+                    item2remove.parentNode.removeChild( item2remove ) ;
+                } ) ;
+
                 wrap.innerHTML = inject ;
+                wrap.appendChild( btnRemove ) ;
                 list[ (ref ? 'insertBefore' : 'appendChild') ]( wrap , ref || undefined ) ;
             } )
         )) ;
@@ -54,7 +68,6 @@ document.addEventListener('DOMContentLoaded' , () => {
                         ,target = `/account/remove/code-recup/${slug}/${id}?code_recup=${code2remove}`
                     ;
 
-                    
                     if( itemCodeRecup.find( i => i == id ) ) {
 
                         console.info('this code recup load remove ...');
@@ -64,6 +77,7 @@ document.addEventListener('DOMContentLoaded' , () => {
                     if( window.fetch instanceof Function ) {
 
                         itemCodeRecup.push( id ) ;
+                        this.classList.add('btn-load');
 
                         window.fetch( target , {
                             method: 'GET'
@@ -74,6 +88,7 @@ document.addEventListener('DOMContentLoaded' , () => {
                             response.json()
                         ) ).then( data => {
                             
+                            this.classList.remove('btn-load');
                             if( data.id ) {
                                 itemCodeRecup = itemCodeRecup.filter( i => i != data.id  ) ;
                             }

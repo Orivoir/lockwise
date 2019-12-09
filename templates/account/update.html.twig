@@ -19,7 +19,9 @@
             
             <div>
                 {{ form_label( form.login , 'login' ) }}
-                {{ form_widget( form.login ) }}
+                {{ form_widget( form.login , {
+                    "required": false 
+                } ) }}
             </div>
             
             <div>
@@ -38,6 +40,7 @@
                     data-widget-counter="{{ form.codeRecup|length }}"
                 >
                     {% for codeRecupField in form.codeRecup  %}
+                        {{ form_errors( codeRecupField ) }}
                         {{ form_widget( codeRecupField ) }}
                     {% endfor %}
                 </ul>

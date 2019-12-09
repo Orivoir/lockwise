@@ -1,6 +1,6 @@
 section {
 
-    height: 100vh;
+    min-height: 100vh;
     display: flex;
 
 }
@@ -76,3 +76,31 @@ form button {
     margin: auto;
     transition: .13s linear all;
 }
+
+
+.btn-remove-type {
+
+    margin: 2vh 0;
+    width: 25%;
+    min-width: 42px;
+}
+
+form ul#collection-fields-list li {
+    display:  flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+form ul#collection-fields-list li button {
+
+    margin: 0;
+    padding: .5vh .85vh;
+    width: 10%;
+    min-width: 32px;
+}
+
+form ul#collection-fields-list li input:focus {
+
+    width: 75%;
+}
+ 
