@@ -62,6 +62,26 @@ class Account
     private $removeAt = NULL;
 
     /**
+     * @ORM\Column(type="array", nullable=true)
+     */
+    private $codeRecup = [];
+
+    public function removeCodeRecup( $val ): bool {
+
+        foreach( $this->codeRecup as $key => $codeRecup ) {
+
+            if( $codeRecup === $val ) {
+                
+                unset( $this->codeRecup[ $key ] ) ;
+                $this->codeRecup = array_values( $this->codeRecup ) ;
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
      * @var factory is an factory entity to build
      */
     public function __construct( $factory = false ) {
@@ -223,6 +243,18 @@ class Account
     public function setRemoveAt(\DateTimeInterface $removeAt): self
     {
         $this->removeAt = $removeAt;
+
+        return $this;
+    }
+
+    public function getCodeRecup(): ?array
+    {
+        return $this->codeRecup;
+    }
+
+    public function setCodeRecup(?array $codeRecup): self
+    {
+        $this->codeRecup = $codeRecup;
 
         return $this;
     }

@@ -1,12 +1,114 @@
 document.addEventListener('DOMContentLoaded' , () => {
 
+    ( items => {
+
+        [ ...items ]
+        .forEach( item => (
+            item.addEventListener('click' , function() {
+
+                const
+                    id = this.getAttribute( 'data-list-selector' )
+                    ,list = document.querySelector( id )
+                ;
+
+                if( !(list instanceof Node) ) {
+                    
+                    console.info('collection type list not found with:' , id );
+                    return;
+                }
+
+                let count = list.getAttribute( 'data-widget-counter' ) ;
+                let inject = list.getAttribute( 'data-prototype' ) ;
+                
+                inject = inject.replace( /__name__/ig  , count++ ) ;
+
+                list.setAttribute( 'data-widget-counter' , count ) ;
+
+                const 
+                    wrap = document.createElement(list.getAttribute('data-widget-tags').split('<').join('').split('>').join('').split('/')[0].trim())
+                    ,ref = list.querySelector( wrap.nodeName )
+                ;
+
+                wrap.innerHTML = inject ;
+                list[ (ref ? 'insertBefore' : 'appendChild') ]( wrap , ref || undefined ) ;
+            } )
+        )) ;
+
+    } )( document.querySelectorAll('.add-another-collection-item') )
+
     if( /details/i.test(document.location.pathname) ) {
 
+        // script AJAX remove code recup only on details account route
+        ( items => {
+            let counter = items.length ;
+            let itemCodeRecup = [] ;
+
+            [ ...items ].forEach( item => (
+                item.addEventListener('click' , function() {
+                    
+                    const
+                        wrap = document.querySelector(this.getAttribute('data-item-selector'))
+                        ,id = wrap.getAttribute('data-item-id')
+                        ,slug = wrap.getAttribute('data-item-slug')
+                        ,code2remove = wrap.getAttribute('data-item-code')
+                        ,target = `/account/remove/code-recup/${slug}/${id}?code_recup=${code2remove}`
+                    ;
+
+                    
+                    if( itemCodeRecup.find( i => i == id ) ) {
+
+                        console.info('this code recup load remove ...');
+                        return;
+                    }
+
+                    if( window.fetch instanceof Function ) {
+
+                        itemCodeRecup.push( id ) ;
+
+                        window.fetch( target , {
+                            method: 'GET'
+                            ,headers: {
+                                'Content-Type': 'application/json'
+                            }
+                        } ).then( response => (
+                            response.json()
+                        ) ).then( data => {
+                            
+                            if( data.id ) {
+                                itemCodeRecup = itemCodeRecup.filter( i => i != data.id  ) ;
+                            }
+                            if( data.success ) {
+
+                                document.querySelector('summary b').textContent = --counter ;
+                                
+                                wrap.classList.add('hide') ;
+
+                            } else {
+                                console.log( target );
+                                console.info( 'server have reject request for remove code recup with : ' , data  ) ;
+                            }
+
+                        } ).catch( error => {
+
+                            console.info('remove code recup request failed with : ' , status );
+                            throw `Fetch failed`
+                        } );
+
+                    } else {
+                        throw "fetch API is not support with this browser";
+                    }
+    
+                } ) 
+            ) )
+
+        } )( document.querySelectorAll('.code-recup-list li.code-recup-item button[data-item-selector]') ) ;
+
+        // script show/hide password only on details account route
         document.querySelector('.password-copied button').addEventListener('click' , function() {
             this.parentNode.classList.add('hide') 
         } ) ;
 
-        // script show/hide password only on details account route
+
         ( passwordToggles => (
             [...passwordToggles].map( passToggle => {
                 passToggle._status = true;

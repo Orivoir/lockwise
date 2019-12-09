@@ -8,6 +8,7 @@ use App\Repository\AccountRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
@@ -156,6 +157,10 @@ class AccountController extends AbstractController
         $form
             ->add('login',TextType::class )
             ->add('password',TextType::class )
+            ->add('codeRecup' , CollectionType::class , [
+                'entry_type' => TextType::class
+                ,'allow_add' => true
+            ] )
         ;
 
         $form->handleRequest( $rq ) ;
@@ -240,5 +245,51 @@ class AccountController extends AbstractController
                 "token" => $this->token
             ]
         );
+    }
+
+    /**
+     * @Route("/remove/code-recup/{slug}/{id}"  , name="remove.codeRecup" , methods={"GET"} )
+     */
+    public function removeCodeRecup(string $slug , Account $account, Request $rq ) {
+
+        $backNotFound = [
+            "success" => false
+            ,"code" => 404
+        ] ;
+
+        if( $account->getIsRemove() ) {
+
+            $this->addFlash('error','account not found') ;
+            return $this->json( $backNotFound ) ;
+        }
+
+        $code2remove = $rq->get('code_recup') ;
+        $isRemove = $account->removeCodeRecup( $code2remove ) ;
+
+        $backNotFound['codeRecup'] = $code2remove;
+
+        if( $isRemove ) {
+
+            $em = $this->getDoctrine()->getManager() ;
+
+            $em->persist( $account ) ;
+            $em->flush() ;
+
+            $this->addFlash('success','code de récuperation supprimé avec succés') ;
+
+            return $this->json( [
+                "success" => true
+                ,"code" => 200
+                ,"id" => $account->getId()
+                ,"codeRemove" => $code2remove
+                ,"codeExists" => $account->getCodeRecup()
+            ] ) ;
+
+        } else {
+
+            $this->addFlash('error','account not found') ;
+
+            return $this->json( $backNotFound ) ;
+        }
     }
 }

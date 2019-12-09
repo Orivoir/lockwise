@@ -30,6 +30,44 @@
 
     </div>
 
+    {% if account.codeRecup != NULL %}
+        
+        <div>
+
+
+            <details>
+                <summary>
+                    your <b>{{ account.codeRecup|length }}</b> code get account
+                </summary>
+                
+                <ul class="code-recup-list">
+                    {% for key,codeRecup in account.codeRecup  %}
+                        <li 
+                            class="code-recup-item"
+                            id="item-code-recup-{{key}}"
+                            data-item-slug="{{account.slug}}"
+                            data-item-id="{{account.id}}"
+                            data-item-code="{{codeRecup}}"
+                        >
+                            <span>
+                                {{codeRecup}}
+                            </span>
+                            <button
+                                type="button"
+                                data-item-selector="#item-code-recup-{{key}}"
+                            >
+                                <i class="fas fa-trash-alt"></i>
+                            </button>
+                        </li>
+                    {% endfor %}
+                </ul>
+
+            </details>
+
+        </div>
+
+    {% endif %}
+
     <div class="date-wrap">
 
         <p class="create-at">

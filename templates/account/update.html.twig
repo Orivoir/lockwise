@@ -27,6 +27,31 @@
                 {{ form_widget( form.password ) }}
             </div>
 
+            <div>
+
+                {{ form_label( form.codeRecup , 'code de récupération' ) }}
+
+                <ul
+                    id="collection-fields-list"
+                    data-prototype="{{ form_widget(form.codeRecup.vars.prototype)|e }}"
+                    data-widget-tags="{{ '<li></li>'|e }}"
+                    data-widget-counter="{{ form.codeRecup|length }}"
+                >
+                    {% for codeRecupField in form.codeRecup  %}
+                        {{ form_widget( codeRecupField ) }}
+                    {% endfor %}
+                </ul>
+
+                <button
+                    type="button"
+                    class="add-another-collection-item"
+                    data-list-selector="#collection-fields-list"
+                >
+                    add code
+                </button>
+
+            </div>
+
             <button type="submit"> 
                 modifié
                 <i class="fas fa-chevron-right"></i>
