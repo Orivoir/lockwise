@@ -6,4 +6,4 @@
 - optimize **UI** form update responsive align and add remove **code recup** from form
 - add remove **code recup** from account **details** render
 
-> locwise local is an handler accounts for localhost and an test with release [Symfony 5](https://symfony.com)
+> lockwise local is an handler accounts for localhost and an test with release [Symfony 5](https://symfony.com)
