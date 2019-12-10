@@ -1,4 +1,5 @@
 {
+    "version": "0.2.6",
     "description": "handler accounts",
     "name": "lockwise",
     "type": "project",

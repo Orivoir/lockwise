@@ -65,7 +65,7 @@ document.addEventListener('DOMContentLoaded' , () => {
                         ,id = wrap.getAttribute('data-item-id')
                         ,slug = wrap.getAttribute('data-item-slug')
                         ,code2remove = wrap.getAttribute('data-item-code')
-                        ,target = `/account/remove/code-recup/${slug}/${id}?code_recup=${code2remove}`
+                        ,target = `/code-recup/remove/${slug}/${id}?code_recup=${code2remove}`
                     ;
 
                     if( itemCodeRecup.find( i => i == code2remove ) ) {
