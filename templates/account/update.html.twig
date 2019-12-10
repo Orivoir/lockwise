@@ -31,15 +31,15 @@
 
             <div>
 
-                {{ form_label( form.codeRecup , 'code de récupération' ) }}
+                {{ form_label( form.codeRecups , 'code de récupération' ) }}
 
                 <ul
                     id="collection-fields-list"
-                    data-prototype="{{ form_widget(form.codeRecup.vars.prototype)|e }}"
+                    data-prototype="{{ form_widget(form.codeRecups.vars.prototype)|e }}"
                     data-widget-tags="{{ '<li></li>'|e }}"
-                    data-widget-counter="{{ form.codeRecup|length }}"
+                    data-widget-counter="{{ form.codeRecups|length }}"
                 >
-                    {% for codeRecupField in form.codeRecup  %}
+                    {% for codeRecupField in form.codeRecups  %}
                         {{ form_errors( codeRecupField ) }}
                         {{ form_widget( codeRecupField ) }}
                     {% endfor %}

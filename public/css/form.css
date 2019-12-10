@@ -104,3 +104,13 @@ form ul#collection-fields-list li input:focus {
     width: 75%;
 }
  
+button.add-another-collection-item {
+
+    padding: .5vh .85vh;
+    width: 20%;
+    min-width: 40px;
+    font-size: 14px;
+    font-weight: normal;
+    border-width: 1px;
+    margin: 2.5vh 0;
+}

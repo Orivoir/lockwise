@@ -68,15 +68,14 @@ document.addEventListener('DOMContentLoaded' , () => {
                         ,target = `/account/remove/code-recup/${slug}/${id}?code_recup=${code2remove}`
                     ;
 
-                    if( itemCodeRecup.find( i => i == id ) ) {
-
+                    if( itemCodeRecup.find( i => i == code2remove ) ) {
                         console.info('this code recup load remove ...');
                         return;
                     }
 
                     if( window.fetch instanceof Function ) {
 
-                        itemCodeRecup.push( id ) ;
+                        itemCodeRecup.push( code2remove ) ;
                         this.classList.add('btn-load');
 
                         window.fetch( target , {
@@ -89,8 +88,8 @@ document.addEventListener('DOMContentLoaded' , () => {
                         ) ).then( data => {
                             
                             this.classList.remove('btn-load');
-                            if( data.id ) {
-                                itemCodeRecup = itemCodeRecup.filter( i => i != data.id  ) ;
+                            if( data.codeId ) {
+                                itemCodeRecup = itemCodeRecup.filter( i => i != data.codeId  ) ;
                             }
                             if( data.success ) {
 

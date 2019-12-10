@@ -1,25 +1,25 @@
 
-{% if account.codeRecup != NULL %}
+{% if account.codeRecups != NULL %}
     
     <div>
 
 
         <details>
             <summary>
-                your <b>{{ account.codeRecup|length }}</b> code get account
+                your <b>{{ account.codeRecups|length }}</b> code get account
             </summary>
             
             <ul class="code-recup-list">
-                {% for key,codeRecup in account.codeRecup  %}
+                {% for key,codeRecup in account.codeRecups  %}
                     <li 
                         class="code-recup-item"
                         id="item-code-recup-{{key}}"
                         data-item-slug="{{account.slug}}"
                         data-item-id="{{account.id}}"
-                        data-item-code="{{codeRecup}}"
+                        data-item-code="{{codeRecup.id}}"
                     >
                         <span>
-                            {{codeRecup}}
+                            {{codeRecup.content}}
                         </span>
                         <button
                             type="button"

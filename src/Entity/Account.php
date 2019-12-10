@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Faker\Factory;
 use Cocur\Slugify\Slugify;
 use Doctrine\ORM\Mapping as ORM;
@@ -62,24 +64,15 @@ class Account
     private $removeAt = NULL;
 
     /**
-     * @ORM\Column(type="array", nullable=true)
+     * @ORM\OneToMany(
+     *      targetEntity="App\Entity\CodeRecup", 
+     *      mappedBy="account", 
+     *      orphanRemoval=true,
+     *      cascade={"persist"} ,
+     *      fetch="EAGER"
+     * )
      */
-    private $codeRecup = [];
-
-    public function removeCodeRecup( $val ): bool {
-
-        foreach( $this->codeRecup as $key => $codeRecup ) {
-
-            if( $codeRecup === $val ) {
-                
-                unset( $this->codeRecup[ $key ] ) ;
-                $this->codeRecup = array_values( $this->codeRecup ) ;
-                return true;
-            }
-        }
-
-        return false;
-    }
+    private $codeRecups;
 
     /**
      * @var factory is an factory entity to build
@@ -94,6 +87,7 @@ class Account
         } else {
             $this->createAt = new \DateTime() ;
         }
+        $this->codeRecups = new ArrayCollection();
     }
 
     /**
@@ -247,15 +241,33 @@ class Account
         return $this;
     }
 
-    public function getCodeRecup(): ?array
+    /**
+     * @return Collection|CodeRecup[]
+     */
+    public function getCodeRecups(): Collection
     {
-        return $this->codeRecup;
+        $codeFilter = new ArrayCollection() ;
+
+        foreach( $this->codeRecups as $codeRecup ) {
+
+            if( !$codeRecup->getIsRemove() )
+                $codeFilter[] = $codeRecup;
+        }
+
+        return $codeFilter ;
     }
 
-    public function setCodeRecup(?array $codeRecup): self
+    
+    public function removeCodeRecup(CodeRecup $code) {}
+
+    public function addCodeRecup(CodeRecup $codeRecup): self
     {
-        $this->codeRecup = $codeRecup;
+        if (!$this->codeRecups->contains($codeRecup)) {
+            $this->codeRecups[] = $codeRecup;
+            $codeRecup->setAccount($this);
+        }
 
         return $this;
     }
+
 }

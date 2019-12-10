@@ -3,8 +3,11 @@
 namespace App\Controller;
 
 use App\Entity\Account;
+use App\Entity\CodeRecup;
+use App\Form\CodeRecupType;
 use App\Form\AccountFormType;
 use App\Repository\AccountRepository;
+use App\Repository\CodeRecupRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -153,12 +156,12 @@ class AccountController extends AbstractController
         }
 
         $form = $this->createForm( AccountFormType::class , $account ) ;
-        
+
         $form
             ->add('login',TextType::class )
             ->add('password',TextType::class )
-            ->add('codeRecup' , CollectionType::class , [
-                'entry_type' => TextType::class
+            ->add('codeRecups' , CollectionType::class , [
+                'entry_type' => CodeRecupType::class
                 ,'allow_add' => true
                 ,'allow_delete' => true
             ] )
@@ -169,6 +172,13 @@ class AccountController extends AbstractController
         if( $form->isSubmitted() && $form->isValid() ) {
 
             $em = $this->getDoctrine()->getManager() ;
+
+            $codeRecups = $form->getData()->getCodeRecups()->toArray() ;
+
+            foreach( $codeRecups as  $codeRecup ) {
+
+                $codeRecup->setAccount( $account ) ;
+            }
 
             $this->addFlash('success' , 'account create with success .' ) ;
 
@@ -251,7 +261,7 @@ class AccountController extends AbstractController
     /**
      * @Route("/remove/code-recup/{slug}/{id}"  , name="remove.codeRecup" , methods={"GET"} )
      */
-    public function removeCodeRecup(string $slug , Account $account, Request $rq ) {
+    public function removeCodeRecup(string $slug , Account $account, Request $rq , CodeRecupRepository $codeRecupRepo ) {
 
         $backNotFound = [
             "success" => false
@@ -264,33 +274,33 @@ class AccountController extends AbstractController
             return $this->json( $backNotFound ) ;
         }
 
-        $code2remove = $rq->get('code_recup') ;
-        $isRemove = $account->removeCodeRecup( $code2remove ) ;
+        $idCode = $rq->get('code_recup') ;
 
-        $backNotFound['codeRecup'] = $code2remove;
+        $code2remove = $codeRecupRepo->find( (int) $idCode ) ;
 
-        if( $isRemove ) {
+        if( $code2remove ) {
 
             $em = $this->getDoctrine()->getManager() ;
 
-            $em->persist( $account ) ;
+            $backNotFound['codeRecup'] = $code2remove->getContent() ;
+            $code2remove->setisRemove( true ) ;
+
+            $em->persist( $code2remove ) ;
             $em->flush() ;
 
-            $this->addFlash('success','code de récuperation supprimé avec succés') ;
-
-            return $this->json( [
-                "success" => true
-                ,"code" => 200
-                ,"id" => $account->getId()
-                ,"codeRemove" => $code2remove
-                ,"codeExists" => $account->getCodeRecup()
-            ] ) ;
-
+            return $this->json([
+                'codeRecup' => $code2remove->getContent() ,
+                'codeId' => $code2remove->getId() , 
+                'success' => true ,
+                'account' => $account->getId()
+            ]) ;
+    
         } else {
-
-            $this->addFlash('error','account not found') ;
-
+            // 404
+            $this->addFlash('error','code not found') ;
             return $this->json( $backNotFound ) ;
         }
+
+
     }
 }
