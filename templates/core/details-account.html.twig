@@ -1,14 +1,14 @@
-<section>
-	<p>
-		{{ account.login != NULL ? "loggé en tant que " ~ account.login : "login unknow" }}
+<section class="wrap-details-account">
+	<p class="login">
+		logged with <b>{{ account.login != NULL ? account.login : "unknow" }}</b>
 	</p>
 
-    <div class="password-copied hide">
+    {# notif password is copy #}
+    <div class="password-copied o-hide">
         <button
             type="button"
         >
-            <i class="fas fa-times">
-            </i>
+            <i class="fas fa-times"></i>
         </button>
 
         <span>
@@ -24,7 +24,7 @@
             {% for char in account.password|split('')|slice(0,8) %}*{% endfor %}
         </span>
     
-        <span class="visible-pass hide">
+        <span class="visible-pass o-hide">
             <input type="text" value="{{account.password}}">
         </span>
 

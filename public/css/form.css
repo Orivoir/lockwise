@@ -1,8 +1,9 @@
-section {
+section.wrap-form {
 
+    height: 100vh;
     min-height: 100vh;
     display: flex;
-
+    overflow: auto;
 }
 
 form {
@@ -10,7 +11,7 @@ form {
     display: flex;
     flex-direction: column;
     justify-content: space-around;
-    background: #fff;
+    background: rgb(207, 183, 183);
     color: #000;
 }
 
@@ -22,6 +23,7 @@ form div {
 
 form div label , form div input {
 
+    background: transparent;
     display: block;
 }
 
@@ -41,8 +43,6 @@ div a {
 
     text-transform: capitalize;
     font-size: 16px;
-    background: rgb( 42,42,42 );
-    padding: 1.3vh 1.35vw;
     border-radius: 3px;
 }
 
@@ -113,4 +113,49 @@ button.add-another-collection-item {
     font-weight: normal;
     border-width: 1px;
     margin: 2.5vh 0;
+}
+
+.wrap-errors-field-form ul ,
+.wrap-errors-field-form li {
+    padding:  0;
+    margin: 0;
+}
+
+.wrap-errors-field-form {
+    display: inline-block;
+}
+
+
+.wrap-errors-field-form ul li {
+
+    position: relative;
+    
+    background: #c63940;
+    color: #fff;
+    display: inline-block;
+    border-top-right-radius: 3px;
+    border-bottom-right-radius: 3px;
+    font-weight: 650;
+    padding: .5vh 1vw;
+    margin: .5vh 0;
+}
+
+.wrap-errors-field-form ul li::before {
+
+    content: "";
+    position: absolute;
+    height: 100%;
+    left: 0;
+    top: 0;
+    width: 35px;
+    transform: translateX(-100%);
+    background-color: #c63940;
+    background-image: url('./../imgs/error.svg');
+    background-size: 75% 75%;
+    background-position: center center;
+    background-repeat: no-repeat;
+}
+
+.back-wrap {
+    margin: auto 2vw;
 }

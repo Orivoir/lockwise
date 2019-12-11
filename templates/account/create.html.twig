@@ -10,23 +10,41 @@
 
 {% block body %}
 
-    <section>
+    <section class="wrap-form">
+
         {{form_start(form)}}
 
             <div>
                 {{ form_label( form.plateform , 'plateform' ) }}
+
+                <section class="wrap-errors-field-form">
+                    {{ form_errors( form.plateform ) }}
+                </section>
                 {{ form_widget( form.plateform ) }}
             </div>
             
             <div>
                 {{ form_label( form.password , 'login' ) }}
+
+                <section class="wrap-errors-field-form">
+                    {{ form_errors( form.password ) }}
+                </section>
+
                 {{ form_widget( form.password ) }}
             </div>
 
             <button type="submit">
                 suivant
             </button>
+            
+            <p class="back-wrap">
+                <a href="{{path("main.index")}}">
+                    Retour
+                </a>
+            </p>
+
         {{form_end(form)}}
+
     </section>
 
 {% endblock %}

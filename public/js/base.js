@@ -1,5 +1,15 @@
 document.addEventListener('DOMContentLoaded' , () => {
 
+    // remove auto label of twig
+    ( () => {
+        window.__ = document.querySelector('#account_form_codeRecups') ;
+        if( window.__ instanceof Node )
+            window.__.parentNode.parentNode.removeChild( _.parentNode ) ;
+    
+        delete window.__;
+    } )();
+    
+
     ( items => {
 
         [ ...items ]
@@ -46,13 +56,13 @@ document.addEventListener('DOMContentLoaded' , () => {
                 wrap.appendChild( btnRemove ) ;
                 list[ (ref ? 'insertBefore' : 'appendChild') ]( wrap , ref || undefined ) ;
             } )
-        )) ;
-
+        )) ; 
     } )( document.querySelectorAll('.add-another-collection-item') )
 
-    if( /details/i.test(document.location.pathname) ) {
+    // script only on details account route
+    if( /account\/details/i.test(document.location.pathname) ) {
 
-        // script AJAX remove code recup only on details account route
+        // script AJAX remove code recup
         ( items => {
             let counter = items.length ;
             let itemCodeRecup = [] ;
@@ -117,12 +127,12 @@ document.addEventListener('DOMContentLoaded' , () => {
 
         } )( document.querySelectorAll('.code-recup-list li.code-recup-item button[data-item-selector]') ) ;
 
-        // script show/hide password only on details account route
+        // script auto copy password
         document.querySelector('.password-copied button').addEventListener('click' , function() {
-            this.parentNode.classList.add('hide') 
+            this.parentNode.classList.add('o-hide') 
         } ) ;
 
-
+        // show/hide password
         ( passwordToggles => (
             [...passwordToggles].map( passToggle => {
                 passToggle._status = true;
@@ -135,8 +145,8 @@ document.addEventListener('DOMContentLoaded' , () => {
                         ,visiblePass = this.querySelector('.visible-pass')
                     ;
 
-                    hidePass.classList[ this._status ? 'add': 'remove' ]( 'hide' );
-                    visiblePass.classList[ !this._status ? 'add': 'remove' ]( 'hide' );
+                    hidePass.classList[ this._status ? 'add': 'remove' ]( 'o-hide' );
+                    visiblePass.classList[ !this._status ? 'add': 'remove' ]( 'o-hide' );
 
                     if( this._status ) {
 
@@ -148,7 +158,7 @@ document.addEventListener('DOMContentLoaded' , () => {
                         if( accept ) {
                             setTimeout(() => {
                                 this.click();
-                                document.querySelector('.password-copied').classList.remove('hide');
+                                document.querySelector('.password-copied').classList.remove('o-hide');
                             }, 250);
                         }
                     }

@@ -14,8 +14,20 @@ class AccountFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('plateform' , TextType::class )
-            ->add('password' , PasswordType::class )
+            ->add('plateform' , TextType::class , [
+                'required' => false ,
+                'attr' => [
+                    'autoFocus' => true ,
+                    'autocomplete' => 'off' 
+                ]
+            ] )
+            ->add('password' , PasswordType::class , [
+                'required' => false ,
+                'attr' => [
+                    'autoFocus' => true ,
+                    'autocomplete' => 'off' 
+                ]
+            ] )
         ;
     }
 

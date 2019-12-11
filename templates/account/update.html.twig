@@ -9,7 +9,7 @@
 {% endblock %}
 
 {% block body %}
-    <section>
+    <section class="wrap-form">
         {{form_start(form)}}
 
             <div>
@@ -41,6 +41,8 @@
                 >
                     {% for codeRecupField in form.codeRecups  %}
                         {{ form_errors( codeRecupField ) }}
+
+                        {{ form_label( codeRecupField , "code recup" ) }}
                         {{ form_widget( codeRecupField ) }}
                     {% endfor %}
                 </ul>
@@ -68,6 +70,7 @@
                     retour
                 </a>
             </div>
+
         {{form_end(form)}}
     </section>
 {% endblock %}

@@ -87,7 +87,7 @@ class AccountController extends AbstractController
 
         if( $slug != $realSlug ) {
             // redirect to the canonique link
-            return $this->redirectToRoute('account.remove' , [
+            return $this->redirectToRoute('account.details' , [
                 'id' => $account->getId()
                 ,'slug' => $realSlug
             ] , 301 ) ;

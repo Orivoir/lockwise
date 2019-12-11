@@ -17,6 +17,38 @@ li.remove-control-item a {
     color: #c23616;
 }
 
+.hide-pass {
+
+    letter-spacing: .14rem;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+.wrap-details-account p ,
+.wrap-details-account span ,
+.wrap-details-account a ,
+.wrap-details-account details ,
+.wrap-details-account summary ,
+.wrap-details-account figcaption
+{
+    letter-spacing: .14rem;
+}
+
+.wrap-details-account .date-wrap .diff-update {
+
+    margin: 5vh 0;
+}
+
+.code-recup-wrap {
+
+    margin: 3.5vh 0;
+}
+
+.password-wrap {
+
+    margin: 3.5vh 0;
+}
+
 .control-wrap ul {
 
     margin: 4vh 0;

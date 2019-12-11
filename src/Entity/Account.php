@@ -2,11 +2,12 @@
 
 namespace App\Entity;
 
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Faker\Factory;
 use Cocur\Slugify\Slugify;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Validator\Constraints\NotNull;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\AccountRepository")
@@ -25,11 +26,13 @@ class Account
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @NotNull( message="plateform cant be empty" )
      */
     private $plateform;
 
     /**
      * @ORM\Column(type="text")
+     * @NotNull( message="password cant be empty" )
      */
     private $password;
 
