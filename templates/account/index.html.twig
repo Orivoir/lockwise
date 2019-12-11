@@ -1,0 +1,28 @@
+{% extends "base.html.twig" %}
+
+{% block title %}
+    accounts list
+{% endblock %}
+
+{% block body %}
+
+    <h1>
+        your <b>{{ accounts|length }}</b>
+        account{{ accounts|length > 1 ? "s" : "" }} on
+    </h1>
+
+    {% include "core/add-account.html.twig" %}
+
+    <section>
+        <ul>
+            <a href="{{path("main.index")}}">
+                les favoris
+            </i>                
+            </a>
+        </ul>
+    </section>
+
+    {% include "core/list-account.html.twig" %}
+
+
+{% endblock %}

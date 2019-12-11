@@ -1,0 +1,161 @@
+section.wrap-form {
+
+    height: 100vh;
+    min-height: 100vh;
+    display: flex;
+    overflow: auto;
+}
+
+form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    background: rgb(207, 183, 183);
+    color: #000;
+}
+
+form div {
+    width: 85%;
+    margin: auto;
+
+}
+
+form div label , form div input {
+
+    background: transparent;
+    display: block;
+}
+
+form div label {
+
+    opacity: .62;
+    margin-bottom: .8vh;
+}
+
+form div input:focus {
+
+    border-color: rgb(25, 149, 165);
+    width: 100%;
+}
+
+div a {
+
+    text-transform: capitalize;
+    font-size: 16px;
+    border-radius: 3px;
+}
+
+form div input {
+
+    transition: .3s cubic-bezier(0.175, -.485, 0.32, 1.275) all;
+    width: 25%;
+    min-width: 42px;
+    border: none;
+    border-bottom: 2px solid #000;
+    outline: none;
+    padding-bottom: 5px;
+}
+
+form button:hover {
+
+    background: #000;
+    color: #fff;
+}
+
+form button {
+
+    font-weight: 650;
+    border: 2px solid #000;
+    border-radius: 3px;
+    text-transform: uppercase;
+    font-size: 20px;
+    padding: 1.8vh 2vw;
+    letter-spacing: .13rem;
+    width: 85%;
+    margin: auto;
+    transition: .13s linear all;
+}
+
+
+.btn-remove-type {
+
+    margin: 2vh 0;
+    width: 25%;
+    min-width: 42px;
+}
+
+form ul#collection-fields-list li {
+    display:  flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+form ul#collection-fields-list li button {
+
+    margin: 0;
+    padding: .5vh .85vh;
+    width: 10%;
+    min-width: 32px;
+}
+
+form ul#collection-fields-list li input:focus {
+
+    width: 75%;
+}
+ 
+button.add-another-collection-item {
+
+    padding: .5vh .85vh;
+    width: 20%;
+    min-width: 40px;
+    font-size: 14px;
+    font-weight: normal;
+    border-width: 1px;
+    margin: 2.5vh 0;
+}
+
+.wrap-errors-field-form ul ,
+.wrap-errors-field-form li {
+    padding:  0;
+    margin: 0;
+}
+
+.wrap-errors-field-form {
+    display: inline-block;
+}
+
+
+.wrap-errors-field-form ul li {
+
+    position: relative;
+    
+    background: #c63940;
+    color: #fff;
+    display: inline-block;
+    border-top-right-radius: 3px;
+    border-bottom-right-radius: 3px;
+    font-weight: 650;
+    padding: .5vh 1vw;
+    margin: .5vh 0;
+}
+
+.wrap-errors-field-form ul li::before {
+
+    content: "";
+    position: absolute;
+    height: 100%;
+    left: 0;
+    top: 0;
+    width: 35px;
+    transform: translateX(-100%);
+    background-color: #c63940;
+    background-image: url('./../imgs/error.svg');
+    background-size: 75% 75%;
+    background-position: center center;
+    background-repeat: no-repeat;
+}
+
+.back-wrap {
+    margin: auto 2vw;
+}

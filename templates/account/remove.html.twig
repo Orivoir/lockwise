@@ -1,0 +1,37 @@
+{% extends "base.html.twig" %}
+
+{% block title %}
+    update {{ account.plateform }}
+{% endblock %}
+
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="/css/remove.css">
+{% endblock %}
+
+{% block body %}
+
+    <form method="get" action="{{ path( "account.remove" ,{
+        "slug": account.slug ,
+        "id": account.id
+    }) }}">
+
+        <input type="hidden" name="token" value="{{token}}">
+
+        <button type="submit">
+            confirmé la supprésion du compte
+            <strong>{{ account.plateform }}</strong>
+        </button>
+
+        <p>
+            <a href="{{path( "account.details" , {
+                "slug": account.slug
+                ,"id": account.id
+            } )}}">
+                <i class="fas fa-times"></i>
+                annulé
+            </a>
+        </p>
+    </form>
+
+{% endblock %}

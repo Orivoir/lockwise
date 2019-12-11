@@ -1,0 +1,13 @@
+<section>
+    {% if accounts|length > 0 %}
+
+        <ul class="list-account">
+            {% for account  in accounts  %}
+                {% include "core/account.html.twig" %}
+            {% endfor %}
+        </ul>    
+
+    {% endif %}
+
+
+</section>

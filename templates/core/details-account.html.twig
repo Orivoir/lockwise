@@ -1,0 +1,112 @@
+<section class="wrap-details-account">
+	<p class="login">
+		logged with <b>{{ account.login != NULL ? account.login : "unknow" }}</b>
+	</p>
+
+    {# notif password is copy #}
+    <div class="password-copied o-hide">
+        <button
+            type="button"
+        >
+            <i class="fas fa-times"></i>
+        </button>
+
+        <span>
+            password is copied with success
+            &emsp;
+            <i class="fas fa-check"></i>
+        </span>
+    </div>
+
+    <div class="password-wrap">
+
+        <span class="hide-pass">
+            {% for char in account.password|split('')|slice(0,8) %}*{% endfor %}
+        </span>
+    
+        <span class="visible-pass o-hide">
+            <input type="text" value="{{account.password}}">
+        </span>
+
+    </div>
+
+    {% include "core/code-recup-account.html.twig" %}
+
+    <div class="date-wrap">
+
+        <p class="create-at">
+            enregistré le
+            <b>
+            {{ account.createAt|date('d/m/Y') }}
+            </b> à
+            <b>
+            {{ account.createAt|date('H:i:s') }}
+            </b>
+        </p>
+
+        {% if account.updateAt == NULL %}
+            <p class="never-update">
+                N'a jamais été modifié
+            </p>
+        {% else %}
+            <p class="last-update">
+                modifié la dernière fois le
+                <b>
+                {{ account.updateAt|date('d/m/Y') }}
+                </b> à
+                <b>
+                {{ account.updateAt|date('H:i:s') }}
+                </b>
+            </p>
+        {% endif %}
+
+        <p
+            class="diff-update {{ 
+                account.diffDaysLastUpdate >= 20 ? 
+                "error" : 
+                account.diffDaysLastUpdate >= 10 ? 
+                "warning"  : "success" 
+            }}"
+        >
+            <span>
+                N'a pas été modifié depuis
+                <b>{{ account.diffDaysLastUpdate }}</b> jours
+            </span>
+        </p>
+
+    </div>
+
+    <div
+        class="control-wrap"
+    >
+
+        <ul>
+            <li class="update-control-item">
+                <a href="{{path("account.update" , {
+                    "id": account.id
+                    ,"slug": account.slug
+                } )}}">
+                    <i class="fas fa-pen"></i>
+                </a>
+            </li>
+
+            <li class="back-control-item">
+                <a href="{{path("account.index")}}">
+                    retour
+                </a>
+            </li>
+
+            <li class="remove-control-item">
+                <a href="{{path("account.remove" , {
+                    "id": account.id
+                    ,"slug": account.slug
+                } )}}">
+                    <i class="fas fa-trash-alt"></i>
+                </a>
+            </li>
+
+        </ul>
+
+    </div>
+
+</section>
