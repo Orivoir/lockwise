@@ -8,7 +8,6 @@ document.addEventListener('DOMContentLoaded' , () => {
     
         delete window.__;
     } )();
-    
 
     ( items => {
 
@@ -127,44 +126,198 @@ document.addEventListener('DOMContentLoaded' , () => {
 
         } )( document.querySelectorAll('.code-recup-list li.code-recup-item button[data-item-selector]') ) ;
 
-        // script auto copy password
+        // handler shortcut init
+        const handleShortcut = [] ;
+
+        // handlers shortcuts define
+        ( () => {
+
+            // handler shortcut methods
+            ( (hsh) => {
+    
+                hsh.match = function( keyName ) {
+    
+                    this.matchers = this.filter( handle => {
+        
+        
+                        const  {command} = handle ;
+        
+                        if( command.indexOf('+') !== -1 ) {
+        
+                            const [leftKey,rightKey] = command.split('+') ;
+        
+                            const assocKeyName = ( ( ) => (
+                                ({
+                                    "Control": "ctrl",
+                                    "control": "ctrl",
+                                    "CONTROL": "ctrl",
+                                    'Alt': 'alt',
+                                    'ALT': 'alt',
+                                    'Shift': 'shift',
+                                    'SHIFT': 'shift',
+                                    'Backspace': 'back',
+                                    'BAcKSPACE': 'back',
+                                    'Tab': 'tab',
+                                    'TAB': 'tab',
+                                })[ keyName ]
+                            ) )() ;
+        
+                            if( assocKeyName ) {
+        
+                                return (  leftKey === assocKeyName ) ? handle : false;
+                            } else if( this.__status  ) {
+        
+                                return rightKey === keyName ? handle: false;
+                            }
+        
+                            else return false ; // key left is not accept
+        
+                        } else {
+        
+                            return false ; // not a valid command
+                        }
+        
+                    } ) ;
+                    
+                    if( !this.__status ) {
+        
+                        this.__tempMatchers = this.matchers ;
+                        delete this.matchers ;
+                        this.on() ;
+                    } else {
+        
+                        this.matchers = this.__tempMatchers.filter( matcher => {
+                            return !!this.matchers.find( m => m.name === matcher.name )
+                        }  ) ;
+        
+                        this.matchers.exec = function() {
+                                
+                            this.forEach( matcher =>
+                                matcher.callbacks instanceof Array ? 
+                                    matcher.callbacks.forEach( callback =>
+                                        callback instanceof Function ? 
+                                            callback( matcher.command , matcher.name ) :
+                                        null
+                                    ) :
+                                null
+                            ) ;
+        
+                            hsh.off() ;
+                        } ;
+                    }
+        
+                } ;
+                
+                hsh.on = function() {
+        
+                    this.__status = true ;
+                } ;
+                
+                hsh.off = function() {
+        
+                    this.__status = false ;
+                    this.__matchers = null;
+                } ;
+                
+                hsh.toggle = function() {
+        
+                    this.__status = !this.__status ;
+        
+                    if( !this.__status ) {
+                        this.__matchers = null ;
+                    }
+                } ;
+                
+                hsh.addPrimary = function( matchers ) {
+        
+                    hsh.__matchers = !!matchers[0] ? [ matchers ] : [...matchers] ; 
+                } ;
+    
+            } )( handleShortcut ) ;
+    
+            // keybord event listened with handleShortcut
+            ( w => {
+    
+                w.addEventListener('keydown' , function( e ) {
+    
+                    // if it's an continous fire
+                    if( e.repeat ) return;
+    
+                    const key = e.key ;
+    
+                    handleShortcut.match( key ) ;
+    
+                    const {matchers} = handleShortcut ;
+    
+                    if( matchers ) {
+    
+                        matchers.exec() ;
+                    }
+    
+                } ) ;
+    
+                w.addEventListener('keyup' , () => handleShortcut.off() ) ;
+    
+            } )( window ) ;
+        } )() ;
+
+        // add an new command in handler shortcuts
+        handleShortcut.push({
+            command: 'ctrl+c',
+            name: 'copy',
+            callbacks: []
+        }) ;
+
+        // get command handler for copy
+        const copyHandler = handleShortcut.find( h => h.name === 'copy' ) ;
+
+        if( copyHandler ) {
+            // attach copy callback to copy command handler
+            copyHandler.callbacks.push( onCopy ) ;
+        } 
+
+        // fire on auto copy password
+        function onCopy() {
+
+            const
+                visiblePass = document.querySelector('[data-pass-visible]')
+                ,hidePass = document.querySelector('[data-pass-hide]')
+            ;
+
+            hidePass.classList[ window._passStatus ? 'add': 'remove' ]( 'o-hide' );
+            visiblePass.classList[ !window._passStatus ? 'add': 'remove' ]( 'o-hide' );
+
+            if( window._passStatus ) {
+
+                const input = visiblePass.querySelector('input');
+                input.focus();
+                input.select();
+                const accept = document.execCommand( 'copy' );
+
+                if( accept ) {
+                    setTimeout(() => {
+                        document.querySelector('[data-pass-wrap]').click();
+                        document.querySelector('.password-copied').classList.remove('o-hide');
+                    }, 250);
+                }
+            }
+
+            window._passStatus = !window._passStatus;
+        }
+
+        // event exec close banner auto copy password with success
         document.querySelector('.password-copied button').addEventListener('click' , function() {
-            this.parentNode.classList.add('o-hide') 
+            this.parentNode.classList.add('o-hide') ;
         } ) ;
 
+        window._passStatus = true;
         // show/hide password
         ( passwordToggles => (
             [...passwordToggles].map( passToggle => {
                 passToggle._status = true;
                 return passToggle;
             } ).forEach( passToggle => (
-                passToggle.addEventListener('click' , function() {
-
-                    const
-                        hidePass = this.querySelector('.hide-pass')
-                        ,visiblePass = this.querySelector('.visible-pass')
-                    ;
-
-                    hidePass.classList[ this._status ? 'add': 'remove' ]( 'o-hide' );
-                    visiblePass.classList[ !this._status ? 'add': 'remove' ]( 'o-hide' );
-
-                    if( this._status ) {
-
-                        const input = visiblePass.querySelector('input');
-                        input.focus();
-                        input.select();
-                        const accept = document.execCommand( 'copy' );
-
-                        if( accept ) {
-                            setTimeout(() => {
-                                this.click();
-                                document.querySelector('.password-copied').classList.remove('o-hide');
-                            }, 250);
-                        }
-                    }
-
-                    this._status = !this._status;
-                } )
+                passToggle.addEventListener('click' , onCopy )
             ) )
         ) )( document.querySelectorAll('.password-wrap') )
     }
