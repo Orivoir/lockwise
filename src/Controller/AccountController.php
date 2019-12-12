@@ -180,6 +180,8 @@ class AccountController extends AbstractController
                 $codeRecup->setAccount( $account ) ;
             }
 
+            $account->setUpdateAt( new \DateTime() );
+
             $this->addFlash('success' , 'account create with success .' ) ;
 
             $em->persist( $account ) ;
