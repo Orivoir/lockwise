@@ -18,13 +18,13 @@
         </span>
     </div>
 
-    <div class="password-wrap">
+    <div class="password-wrap" data-pass-wrap>
 
-        <span class="hide-pass">
+        <span data-pass-hide class="hide-pass">
             {% for char in account.password|split('')|slice(0,8) %}*{% endfor %}
         </span>
     
-        <span class="visible-pass o-hide">
+        <span data-pass-visible class="visible-pass o-hide">
             <input type="text" value="{{account.password}}">
         </span>
 
