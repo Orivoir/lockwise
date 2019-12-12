@@ -129,3 +129,15 @@ button.btn-load::before {
 
     opacity: 0;
 }
+
+span.error {
+
+    color: #c23616;
+}
+span.success {
+    color: rgb(51, 172, 51);
+}
+span.warning {
+    
+    color: rgb(185, 185, 25);
+} 
