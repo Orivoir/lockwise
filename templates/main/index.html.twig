@@ -19,10 +19,28 @@
 
     {% include "core/list-account.html.twig" %}
 
-    <p>
-        <a href="{{path("account.index")}}">
-            tous les comptes
-        </a>
-    </p>
+    <section>
+        <ul>
+
+            <li>
+                 <a href="{{path("account.index")}}">
+                    tous les comptes
+                </a>
+            </li>
+
+            <li>
+                <a href="{{path("account.warn")}}">
+                    warnings
+                </a>
+            </li>
+
+            <li>
+                <a href="{{path("account.error")}}">
+                    errors
+                </a>
+            </li>
+
+        </ul>
+    </section>
 
 {% endblock %}

@@ -50,16 +50,19 @@ class AccountRepository extends ServiceEntityRepository
 
     public const PUBLIC_ACCESS  = true;
     public const PRIVATE_ACCESS = false;
+    public const LEVEL_UPDATE_SUCCESS = 'success';
+    public const LEVEL_UPDATE_WARN = 'warning';
+    public const LEVEL_UPDATE_ERROR = 'error';
 
     public function findAllFavorite( $public = true ) {
 
         $q = $this->createQueryBuilder('a')
-            ->where('a.isRemove = false')
+            ->where('a.isFavorite = true')
         ;
 
         if( $public ) {
 
-            $q->andWhere('a.isFavorite = true') ;
+            $q->andWhere('a.isRemove = false') ;
         }
 
         return $q
@@ -77,6 +80,43 @@ class AccountRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult()
         ;
+
+    }
+
+    public function findAllByUpdateAt( $level = 'success' , $public = true )
+    {
+
+        $q = $this->createQueryBuilder('a');
+
+        if( $public )
+            $q->where('a.isRemove = false');
+
+        $accounts = $q
+            ->orderBy('a.createAt', 'DESC')
+            ->getQuery()
+            ->getResult()
+        ;
+
+        $accountsFilter = [] ;
+
+        if( self::LEVEL_UPDATE_ERROR === $level ) {
+            $limit = [20,36500] ;
+        } else if( self::LEVEL_UPDATE_WARN === $level ) {
+            $limit = [10,20] ;
+        } else {
+            $limit = [0,10] ;
+        }
+
+        foreach( $accounts as $account ) {
+
+            $diffDaysUpdate = $account->getDiffDaysLastUpdate() ;
+
+            if( $diffDaysUpdate > $limit[0] && $diffDaysUpdate < $limit[1] ) {
+                $accountsFilter[] = $account ;
+            }
+        }
+
+        return $accountsFilter ;
     }
 }
 

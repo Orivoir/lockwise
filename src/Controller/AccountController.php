@@ -137,7 +137,7 @@ class AccountController extends AbstractController
      */
     public function update(
         string $slug
-        ,Account $account 
+        ,Account $account
         ,Request $rq
     ) {
         $realSlug = $account->getSlug() ;
@@ -195,7 +195,45 @@ class AccountController extends AbstractController
             ,[
                 'form' => $form->createView()
                 ,'account' => $account
-                ,'route' => 'details'
+                ,'route' => 'update'
+            ]
+        ) ;
+    }
+
+    /**
+     * @Route( "/warnings" , name="warn" )
+     */
+    public function warn(AccountRepository $accountRepo) {
+
+        $accountsWarn = $accountRepo->findAllByUpdateAt(
+            AccountRepository::LEVEL_UPDATE_WARN
+            , AccountRepository::PUBLIC_ACCESS
+        ) ;
+
+        return $this->render(
+            'account/warnings.html.twig'
+            ,[
+                'accounts' => $accountsWarn
+                ,'route' => 'warnings'
+            ]
+        ) ;
+    }
+
+    /**
+     * @Route( "/errors" , name="error" )
+     */
+    public function errors(AccountRepository $accountRepo) {
+
+        $accountsWarn = $accountRepo->findAllByUpdateAt(
+            AccountRepository::LEVEL_UPDATE_ERROR
+            , AccountRepository::PRIVATE_ACCESS
+        ) ;
+
+        return $this->render(
+            'account/error.html.twig'
+            ,[
+                'accounts' => $accountsWarn
+                ,'route' => 'warnings'
             ]
         ) ;
     }
@@ -203,8 +241,8 @@ class AccountController extends AbstractController
     /**
      * @Route("/remove/{slug}/{id<\d{1,9}>}", name="remove")
      */
-    public function remove( 
-        string $slug , 
+    public function remove(
+        string $slug ,
         Account $account ,
         Request $rq
     ) {

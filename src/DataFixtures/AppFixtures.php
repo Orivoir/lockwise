@@ -24,7 +24,7 @@ class AppFixtures extends Fixture
         $faker = Factory::create('fr_FR') ;
 
         for ($i=0,$size= \mt_rand( 13 , 30 ) ; $i < $size ; $i++) { 
-            
+
             $account = new Account( Account::FACTORY );
 
             $account

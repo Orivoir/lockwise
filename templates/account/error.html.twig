@@ -1,0 +1,41 @@
+{% extends "base.html.twig" %}
+
+{% block title %}
+    accounts errors
+{% endblock %}
+
+{% block body %}
+
+    <h1>
+        your <b>{{ accounts|length }}</b>
+        error account{{ accounts|length > 1 ? "s" : "" }} on
+    </h1>
+
+    {% include "core/add-account.html.twig" %}
+
+    <section>
+        <ul>
+            <li>
+                <a href="{{path("main.index")}}">
+                    favorites
+                </a>
+            </li>
+
+            <li>
+                 <a href="{{path("account.index")}}">
+                    tous les comptes
+                </a>
+            </li>
+
+            <li>
+                 <a href="{{path("account.warn")}}">
+                    warnings
+                </a>
+            </li>
+
+        </ul>
+    </section>
+
+    {% include "core/list-account.html.twig" %}
+
+{% endblock %}
