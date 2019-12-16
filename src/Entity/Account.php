@@ -68,8 +68,8 @@ class Account
 
     /**
      * @ORM\OneToMany(
-     *      targetEntity="App\Entity\CodeRecup", 
-     *      mappedBy="account", 
+     *      targetEntity="App\Entity\CodeRecup",
+     *      mappedBy="account",
      *      orphanRemoval=true,
      *      cascade={"persist"} ,
      *      fetch="EAGER"
@@ -85,7 +85,7 @@ class Account
         if( $factory ) {
 
             $faker = Factory::create('fr_FR') ;
-            $this->createAt = $faker->dateTimeBetween('-15days' , 'now' );
+            $this->createAt = $faker->dateTimeBetween('-30days' , 'now' );
 
         } else {
             $this->createAt = new \DateTime() ;
@@ -100,7 +100,7 @@ class Account
 
         return $this->updateAt ?? $this->createAt;
     }
-    
+
     /**
      * @return int second time between last update and now 
      */
@@ -260,7 +260,7 @@ class Account
         return $codeFilter ;
     }
 
-    
+
     public function removeCodeRecup(CodeRecup $code) {}
 
     public function addCodeRecup(CodeRecup $codeRecup): self

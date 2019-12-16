@@ -15,14 +15,26 @@
 
     <section>
         <ul>
-            <a href="{{path("main.index")}}">
-                les favoris
-            </i>                
-            </a>
+            <li>
+                <a href="{{path("main.index")}}">
+                    favorites
+                </a>
+            </li>
+
+            <li>
+                <a href="{{path("account.warn")}}">
+                    warnings
+                </a>
+            </li>
+
+            <li>
+                <a href="{{path("account.error")}}">
+                    errors
+                </a>
+            </li>
         </ul>
     </section>
 
     {% include "core/list-account.html.twig" %}
-
 
 {% endblock %}
